@@ -1,26 +1,62 @@
+/* app/globals.css
+   The site's colors and fonts, defined once. Pages use them through
+   Tailwind classes such as bg-background, text-muted, border-line,
+   bg-accent and font-display. */
+
 @import "tailwindcss";
 
+/* Light mode (the default) */
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1b1a2e; /* ink: a deep indigo rather than flat black */
+  --muted: #5d5b70;
+  --line: #e4e2ec;
+  --accent: #1f6b47; /* Ordinary Time green, for buttons */
+  --accent-contrast: #ffffff;
+  --notice-bg: #fbeceb;
+  --notice-fg: #8a2a22;
 }
 
+/* Dark mode follows the visitor's system setting */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #15141f;
+    --foreground: #eeedf5;
+    --muted: #a5a3b8;
+    --line: #2c2a3d;
+    --accent: #5cc48f;
+    --accent-contrast: #0d2a1b;
+    --notice-bg: #3a1714;
+    --notice-fg: #f4b4ad;
+  }
+}
+
+/* Turn the variables above into Tailwind classes */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-notice-bg: var(--notice-bg);
+  --color-notice-fg: var(--notice-fg);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* Bricolage Grotesque is installed from npm (works offline);
+     body text uses the visitor's own system font. */
+  --font-display: "Bricolage Grotesque Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+}
+
+/* A clear outline for keyboard users on every link and button */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }

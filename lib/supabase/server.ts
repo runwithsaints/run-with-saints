@@ -1,13 +1,18 @@
 // lib/supabase/server.ts
 // Creates a Supabase client for code that runs on the server
 // (pages, server actions, route handlers). Each request gets its own client.
+//
+// New in this version: <Database> tells TypeScript what your tables look like,
+// so a typo like .select("tittle") or event.strats_at is caught in neovim
+// before you ever run the page.
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { Database } from "@/lib/database.types";
 
 export async function createClient() {
   const cookieStore = await cookies();
 
-  return createServerClient(
+  return createServerClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
